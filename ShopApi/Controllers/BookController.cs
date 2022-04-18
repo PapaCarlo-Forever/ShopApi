@@ -8,6 +8,7 @@ namespace ShopApi.Controllers
     public class BookController : Controller
     {
         private readonly ApplicationContext _context;
+        private AuthorController authorController;
         public BookController(ApplicationContext context)
         {
             _context = context;
@@ -31,6 +32,9 @@ namespace ShopApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(Book book)
         {
+            var author = _context.Authors.FindAsync(book.Authors.Id);
+            if (author.Result == null)
+                return BadRequest("Атора нет");
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
             return Ok(await _context.Books.ToListAsync());
@@ -43,7 +47,6 @@ namespace ShopApi.Controllers
             if (book == null)
                 return BadRequest("Книга нет");
             book.Id = request.Id;
-            book.AuthorId = request.AuthorId;
             book.Description = request.Description;
             book.Price = request.Price;
             book.Pages = request.Pages;
