@@ -24,7 +24,7 @@ namespace ShopApi.Controllers
         public async Task<ActionResult<Author>> GetID(int id)
         {
             var author = _context.Authors.FindAsync(id);
-            if (author == null)
+            if (author.Result == null)
                 return BadRequest("Автора нет");
             return Ok(author);
         }

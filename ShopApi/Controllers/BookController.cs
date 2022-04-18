@@ -32,7 +32,7 @@ namespace ShopApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(Book book)
         {
-            var author = _context.Authors.FindAsync(book.Authors.Id);
+            var author = _context.Authors.FindAsync(book.AuthorId);
             if (author.Result == null)
                 return BadRequest("Атора нет");
             _context.Books.Add(book);
@@ -50,7 +50,7 @@ namespace ShopApi.Controllers
             book.Description = request.Description;
             book.Price = request.Price;
             book.Pages = request.Pages;
-            book.Authors = request.Authors;
+            book.AuthorId = request.AuthorId;
             book.Title = request.Title;
             await _context.SaveChangesAsync();
             return Ok(await _context.Books.ToListAsync());

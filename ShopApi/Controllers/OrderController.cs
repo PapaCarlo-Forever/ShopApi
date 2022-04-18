@@ -17,6 +17,9 @@ namespace ShopApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(Order order)
         {
+            var book = _context.Books.FindAsync(order.BookId);
+            if (book.Result == null)
+                return BadRequest("Книги нет");
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return Ok(await _context.Orders.ToListAsync());

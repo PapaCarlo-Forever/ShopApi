@@ -7,6 +7,6 @@
         public string Description { get; set; }
         public int Pages { get; set; }
         public double Price { get; set; }
-        public Author Authors { get; set; }
+        public int AuthorId { get; set; }
     }
 }
