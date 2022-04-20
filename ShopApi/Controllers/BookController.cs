@@ -3,12 +3,11 @@
 
 namespace ShopApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Book")]
     [ApiController]
     public class BookController : Controller
     {
         private readonly ApplicationContext _context;
-        private AuthorController authorController;
         public BookController(ApplicationContext context)
         {
             _context = context;

@@ -4,7 +4,7 @@ using ShopApi.Models;
 
 namespace ShopApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Order")]
     [ApiController]
     public class OrderController : Controller
     {

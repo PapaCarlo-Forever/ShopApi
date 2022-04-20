@@ -4,7 +4,7 @@ using ShopApi.Models;
 
 namespace ShopApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Author")]
     [ApiController]
     public class AuthorController : ControllerBase
     {
@@ -13,10 +13,11 @@ namespace ShopApi.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<Author>>> Get()
         {
-            return Ok(await _context.Authors.ToListAsync());
+            return await _context.Authors.ToListAsync();
         }
 
 
