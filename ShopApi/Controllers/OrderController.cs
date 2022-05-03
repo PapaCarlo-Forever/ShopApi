@@ -13,14 +13,29 @@ namespace ShopApi.Controllers
         {
             _context = context;
         }
-
-        [HttpPost]
-        public async Task<ActionResult> Add(Order order)
+        [HttpGet]
+        public async Task<ActionResult<List<Order>>> Get()
         {
-            var book = _context.Books.FindAsync(order.BookId);
-            if (book.Result == null)
-                return BadRequest("Книги нет");
-            _context.Orders.Add(order);
+            return Ok(await _context.Orders.ToListAsync());
+        }
+        [HttpPost]
+        public async Task<ActionResult> Add(Order request)
+        {
+            var order = await _context.Orders.FindAsync(request.Id);
+            if (order != null)
+                order.BookId.Add(request.BookId[0]);
+            else
+                _context.Orders.Add(request);
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Orders.ToListAsync());
+        }
+        [HttpDelete]
+        public async Task<ActionResult<List<Order>>> Delete(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+                return BadRequest("Заказа нет");
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return Ok(await _context.Orders.ToListAsync());
         }
