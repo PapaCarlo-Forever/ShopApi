@@ -33,7 +33,7 @@ namespace ShopApi.Controllers
         {
             var author = _context.Authors.FindAsync(book.AuthorId);
             if (author.Result == null)
-                return BadRequest("Атора нет");
+                return BadRequest("Автора нет");
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
             return Ok(await _context.Books.ToListAsync());

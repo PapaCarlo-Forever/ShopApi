@@ -23,9 +23,19 @@ namespace ShopApi.Controllers
         {
             var order = await _context.Orders.FindAsync(request.Id);
             if (order != null)
+            {
+                var book = await _context.Books.FindAsync(request.BookId[0]);
+                if (book == null)
+                    return BadRequest("Книга нет");
                 order.BookId.Add(request.BookId[0]);
+            }
             else
+            {
+                var book = await _context.Books.FindAsync(request.BookId[0]);
+                if (book == null)
+                    return BadRequest("Книга нет");
                 _context.Orders.Add(request);
+            }
             await _context.SaveChangesAsync();
             return Ok(await _context.Orders.ToListAsync());
         }
