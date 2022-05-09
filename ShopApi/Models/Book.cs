@@ -8,5 +8,6 @@
         public int Pages { get; set; }
         public double Price { get; set; }
         public int AuthorId { get; set; }
+        public int Count { get; set; }
     }
 }

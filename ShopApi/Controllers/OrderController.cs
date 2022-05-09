@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.Models;
 
 namespace ShopApi.Controllers
 {
+    [EnableCors()]
     [Route("api/Order")]
     [ApiController]
     public class OrderController : Controller
@@ -24,16 +26,16 @@ namespace ShopApi.Controllers
             var order = await _context.Orders.FindAsync(request.Id);
             if (order != null)
             {
-                var book = await _context.Books.FindAsync(request.BookId[0]);
+                var book = await _context.Books.FindAsync(request.Items[0]);
                 if (book == null)
-                    return BadRequest("Книга нет");
-                order.BookId.Add(request.BookId[0]);
+                    return BadRequest("Книги нет");
+                order.Items.Add(request.Items[0]);
             }
             else
             {
-                var book = await _context.Books.FindAsync(request.BookId[0]);
+                var book = await _context.Books.FindAsync(request.Items[0]);
                 if (book == null)
-                    return BadRequest("Книга нет");
+                    return BadRequest("Книги нет");
                 _context.Orders.Add(request);
             }
             await _context.SaveChangesAsync();
