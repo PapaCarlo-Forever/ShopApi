@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopApi.Models;
 
 namespace ShopApi.Controllers
 {
+    [EnableCors()]
     [Route("api/Author")]
     [ApiController]
     public class AuthorController : ControllerBase

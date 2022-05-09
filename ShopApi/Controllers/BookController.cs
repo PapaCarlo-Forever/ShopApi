@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace ShopApi.Controllers
 {
+    [EnableCors()]
     [Route("api/Book")]
     [ApiController]
     public class BookController : Controller
@@ -44,13 +46,14 @@ namespace ShopApi.Controllers
         {
             var book = await _context.Books.FindAsync(request.Id);
             if (book == null)
-                return BadRequest("Книга нет");
+                return BadRequest("Книги нет");
             book.Id = request.Id;
             book.Description = request.Description;
             book.Price = request.Price;
             book.Pages = request.Pages;
             book.AuthorId = request.AuthorId;
             book.Title = request.Title;
+            book.Count = request.Count;
             await _context.SaveChangesAsync();
             return Ok(await _context.Books.ToListAsync());
         }
