@@ -28,14 +28,18 @@ namespace ShopApi.Controllers
             {
                 var book = await _context.Books.FindAsync(request.Items[0]);
                 if (book == null)
+                { 
                     return BadRequest("Книги нет");
+                }
                 order.Items.Add(request.Items[0]);
             }
             else
             {
                 var book = await _context.Books.FindAsync(request.Items[0]);
                 if (book == null)
+                { 
                     return BadRequest("Книги нет");
+                }
                 _context.Orders.Add(request);
             }
             await _context.SaveChangesAsync();
@@ -46,7 +50,9 @@ namespace ShopApi.Controllers
         {
             var order = await _context.Orders.FindAsync(id);
             if (order == null)
+            { 
                 return BadRequest("Заказа нет");
+            }
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return Ok(await _context.Orders.ToListAsync());

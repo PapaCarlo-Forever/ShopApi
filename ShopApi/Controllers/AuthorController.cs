@@ -28,7 +28,9 @@ namespace ShopApi.Controllers
         {
             var author = _context.Authors.FindAsync(id);
             if (author.Result == null)
+            {     
                 return BadRequest("Автора нет");
+            }
             return Ok(author);
         }
 
@@ -45,7 +47,9 @@ namespace ShopApi.Controllers
         {
             var author = await _context.Authors.FindAsync(request.Id);
             if (author == null)
+            {     
                 return BadRequest("Автора нет");
+            }
             author.Surname = request.Surname;
             author.Name = request.Name;
             author.Patronymic = request.Patronymic;
@@ -57,7 +61,9 @@ namespace ShopApi.Controllers
         {
             var author = await _context.Authors.FindAsync(id);
             if (author == null)
+            {     
                 return BadRequest("Автора нет");
+            }
             _context.Authors.Remove(author);
             await _context.SaveChangesAsync();
             return Ok(await _context.Authors.ToListAsync());
